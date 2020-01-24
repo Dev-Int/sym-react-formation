@@ -42,8 +42,8 @@ class AppFixtures extends Fixture
             $manager->persist($user);
 
             for ($c = 0; $c < mt_rand(5, 20); $c++) {
-                $customer = new Customer();
-                $customer->setFirstName($faker->firstName())
+                $customer = (new Customer())
+                    ->setFirstName($faker->firstName())
                     ->setLastName($faker->lastName)
                     ->setCompany($faker->company)
                     ->setEmail($faker->email)
@@ -53,8 +53,8 @@ class AppFixtures extends Fixture
                 $manager->persist($customer);
 
                 for ($i = 0; $i < mt_rand(3, 10); $i++) {
-                    $invoice = new Invoice();
-                    $invoice->setAmount($faker->randomFloat(2, 250, 5000))
+                    $invoice = (new Invoice())
+                        ->setAmount($faker->randomFloat(2, 250, 5000))
                         ->setSentAt($faker->dateTimeBetween('-6 months'))
                         ->setStatus($faker->randomElement(['SENT', 'PAID', 'CANCELLED']))
                         ->setCustomer($customer)
@@ -66,7 +66,6 @@ class AppFixtures extends Fixture
                     $manager->persist($invoice);
                 }
             }
-
         }
 
         $manager->flush();

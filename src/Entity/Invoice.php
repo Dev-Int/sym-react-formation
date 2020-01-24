@@ -6,15 +6,38 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @ApiResource(
+ *     subresourceOperations={
+ *         "api_customers_invoices_get_subresource"={
+ *             "normalization_context"={"groups"={"invoices_subresource"}}
+ *         }
+ *     },
+ *     itemOperations={
+ *         "GET",
+ *         "PUT",
+ *         "DELETE",
+ *         "increment"={
+ *             "method"="post",
+ *             "path"="/invoices/{id}/increment",
+ *             "controller"="App\Controller\InvoiceIncrementationController",
+ *             "openapi_context"={
+ *                 "summary"="Increment invoice",
+ *                 "description"="Incrementation of invoice's chrono"
+ *             }
+ *         }
+ *     },
  *     attributes={
  *         "pagination_enabled"=true,
  *         "pagination_items_per_page"=20,
- *         "order": {"sentAt":"desc"}
- *     }
+ *         "order"={"sentAt":"desc"}
+ *     },
+ *     normalizationContext={"groups"={"invoices:read"}},
+ *     denormalizationContext={"disable_type_enforcement"=true}
  * )
  * @ApiFilter(OrderFilter::class, properties={"amount","sentAt","customer.lastName"})
  */
@@ -24,32 +47,47 @@ class Invoice
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"invoices:read", "customers:read", "invoices_subresource"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"invoices:read", "customers:read", "invoices_subresource"})
+     * @Assert\NotBlank(message="Le montant de la facture est obligatoire !")
+     * @Assert\Type(type="numeric", message="Le montant de la facture doit etre numérique !")
      */
     private $amount;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"invoices:read", "customers:read", "invoices_subresource"})
+     * @Assert\DateTime(message="La date doit etre au format YYYY-MM-DD")
+     * @Assert\NotBlank(message="La date d'envoi doit etre rensignée !")
      */
     private $sentAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"invoices:read", "customers:read", "invoices_subresource"})
+     * @Assert\NotBlank(message="Le status de la facture est obligatoire !")
+     * @Assert\Choice(choices={"SENT", "PAID", "CANCELLED"}, message="le status doit etre SENT, PAIS OU CANCELLED")
      */
     private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"invoices:read"})
+     * @Assert\NotBlank(message="Le client de la facture doit etre renseigné !")
      */
     private $customer;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"invoices:read", "customers:read", "invoices_subresource"})
+     * @Assert\NotBlank(message="Il faut absolument un chrono pour la facture")
+     * @Assert\Type(type="integer", message="Le chrono doit etre un nombre !")
      */
     private $chrono;
 
@@ -116,5 +154,14 @@ class Invoice
         $this->chrono = $chrono;
 
         return $this;
+    }
+
+    /**
+     * @Groups({"invoices:read", "invoices_subresource"})
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->customer->getUser();
     }
 }
