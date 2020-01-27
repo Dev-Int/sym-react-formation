@@ -13,7 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"users:read"}}
+ * )
  * @UniqueEntity("email", message="Un utilisateur avec cette adresse email existe déjà !")
  */
 class User implements UserInterface
@@ -22,13 +24,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"customers:read", "invoices:read", "invoices_subresource"})
+     * @Groups({"customers:read", "invoices:read", "invoices_subresource", "users:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"customers:read", "invoices:read", "invoices_subresource"})
+     * @Groups({"customers:read", "invoices:read", "invoices_subresource", "users:read"})
      * @Assert\NotBlank(message="L'adresse email est obligatoire !")
      * @Assert\Email(message="L'email doit avoir un format valide !")
      */
@@ -48,7 +50,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers:read", "invoices:read", "invoices_subresource"})
+     * @Groups({"customers:read", "invoices:read", "invoices_subresource", "users:read"})
      * @Assert\NotBlank(message="Le prénom est obligatoire !")
      * @Assert\Length(
      *     min=3, minMessage="Le prénom doit etre entre 3 est 255 caractères !",
@@ -59,7 +61,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers:read", "invoices:read", "invoices_subresource"})
+     * @Groups({"customers:read", "invoices:read", "invoices_subresource", "users:read"})
      * @Assert\NotBlank(message="Le nom de famille est obligatoire !")
      * @Assert\Length(
      *     min=3, minMessage="Le nom de famille doit etre entre 3 est 255 caractères !",
