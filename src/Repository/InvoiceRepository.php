@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Invoice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -23,16 +25,19 @@ class InvoiceRepository extends ServiceEntityRepository
 
     public function findNextChrono(UserInterface $user): int
     {
-        return $this->createQueryBuilder('invoice')
-            ->select('invoice.chrono')
-            ->join('invoice.customer', 'customer')
-            ->where('customer.user = :user')
-            ->setParameter('user', $user)
-            ->orderBy('invoice.chrono', 'desc')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getSingleScalarResult() + 1
-        ;
+        try {
+            return $this->createQueryBuilder('invoice')
+                    ->select('invoice.chrono')
+                    ->join('invoice.customer', 'customer')
+                    ->where('customer.user = :user')
+                    ->setParameter('user', $user)
+                    ->orderBy('invoice.chrono', 'desc')
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getSingleScalarResult() + 1;
+        } catch (NoResultException $e) {
+            return 1;
+        }
     }
     // /**
     //  * @return Invoice[] Returns an array of Invoice objects
