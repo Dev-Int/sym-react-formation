@@ -9,13 +9,16 @@ import React, {useContext, useState} from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, withRouter, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import PrivateRoute from "./components/PrivateRoute";
+import AuthContext from "./contexts/AuthContext";
 import HomePage from "./pages/HomePage";
 import CustomersPage from "./pages/CustomersPage";
+import CustomerPage from "./pages/CustomerPage";
 import InvoicesPage from "./pages/InvoicesPage";
+import InvoicePage from "./pages/InvoicePage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import AuthAPI from "./services/authAPI";
-import AuthContext from "./contexts/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
 // import CustomersPageWithPagination from "./pages/CustomersPageWithPagination";
 
 // any CSS you import will output into a single css file (app.css in this case)
@@ -45,7 +48,10 @@ const App = () => {
                 <main className="container pt-5">
                     <Switch>
                         <Route path={"/login"} component={LoginPage} />
+                        <Route path={"/register"} component={RegisterPage} />
+                        <PrivateRoute path={"/invoices/:id"} component={InvoicePage} />
                         <PrivateRoute path={"/invoices"} component={InvoicesPage} />
+                        <PrivateRoute path={"/customers/:id"} component={CustomerPage} />
                         <PrivateRoute path={"/customers"} component={CustomersPage} />
                         <Route path={"/"} component={HomePage} />
                     </Switch>
