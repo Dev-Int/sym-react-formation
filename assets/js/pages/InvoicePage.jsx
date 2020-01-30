@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import CustomersAPI from "../services/customersAPI";
 import InvoicesAPI from "../services/invoicesAPI";
-import Field from "../components/forms/Field";
+import NumberField from "../components/forms/NumberField";
 import Select from "../components/forms/Select";
 import { toast } from "react-toastify";
 import FormContentLoader from "../components/loaders/FormContentLoader";
@@ -74,7 +74,7 @@ const InvoicePage = ({match, history}) => {
             if (editing) {
                 await InvoicesAPI.update(id, invoice);
                 setErrors({});
-                toast.success(`La facture est bien mise à jour`);
+                toast.success(`La facture ${id} est bien mise à jour`);
             } else {
                 await InvoicesAPI.create(invoice);
                 setErrors({});
@@ -100,9 +100,8 @@ const InvoicePage = ({match, history}) => {
             <h1>{!editing && ("Création") || ("Modification")} d'une facture</h1>
             {loading && <FormContentLoader />}
             {!loading && (<form onSubmit={handleSubmit}>
-                <Field
+                <NumberField
                     name="amount"
-                    type="number"
                     placeholder="Montant de la facture"
                     label="Montant"
                     onChange={handleChange}

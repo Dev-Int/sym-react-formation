@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Field = ({
+const NumberField = ({
    name,
    label,
    value,
    onChange,
    placeholder = "",
-   type = "text",
+   type = "number",
    error = ""
 }) => (
         <div className="form-group">
@@ -15,6 +15,8 @@ const Field = ({
                 value={value}
                 onChange={onChange}
                 type={type}
+                step="any"
+                min="0"
                 placeholder={placeholder || label}
                 name={name}
                 id={name}
@@ -24,4 +26,4 @@ const Field = ({
         </div>
     );
 
-export default Field;
+export default NumberField;

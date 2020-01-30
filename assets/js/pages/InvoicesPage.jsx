@@ -49,7 +49,7 @@ const InvoicesPage = (props) => {
 
         try {
             await InvoicesAPI.remove(id);
-            toast.success(`La facture n°${invoices.id} a bien été supprimée`)
+            toast.success(`La facture n°${id} a bien été supprimée`);
         } catch (error) {
             toast.error("Une erreur est survenue !");
             setInvoices(originalInvoices);

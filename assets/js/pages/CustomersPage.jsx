@@ -38,7 +38,7 @@ const CustomersPage = (props) => {
             toast.success("Le client est bien supprimé");
         } catch (error) {
             setCustomers(originalCustomers);
-            toast.error("La suppression à échouée !");
+            toast.error("La suppression a échoué !");
         }
     };
 
