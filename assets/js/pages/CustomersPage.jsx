@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
 import CustomersAPI from "../services/customersAPI";
 import {Link} from "react-router-dom";
+import { toast } from "react-toastify";
+import TableLoader from "../components/loaders/TableLoader";
 
 const CustomersPage = (props) => {
 
     const [customers, setCustomers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(true);
 
     // Récupérer les customers.
     const fetchCustomers = async () => {
         try {
             const data = await CustomersAPI.findAll();
             setCustomers(data);
+            setLoading(false);
         } catch (error) {
-            console.log(error.response);
+            toast.error("Impossible de charger le client !");
         }
     };
 
@@ -31,8 +35,10 @@ const CustomersPage = (props) => {
 
         try {
             await CustomersAPI.remove(id);
+            toast.success("Le client est bien supprimé");
         } catch (error) {
             setCustomers(originalCustomers);
+            toast.error("La suppression à échouée !");
         }
     };
 
@@ -86,10 +92,14 @@ const CustomersPage = (props) => {
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                {!loading && (<tbody>
                 {paginatedCustomers.map(customer => <tr key={customer.id}>
                     <td>{customer.id}</td>
-                    <td><a href="#">{customer.firstName} {customer.lastName}</a></td>
+                    <td>
+                        <Link to={"/customers/" + customer.id}>
+                            {customer.firstName} {customer.lastName}
+                        </Link>
+                    </td>
                     <td>{customer.email}</td>
                     <td>{customer.company}</td>
                     <td className="text-center">
@@ -109,8 +119,10 @@ const CustomersPage = (props) => {
                     </td>
                 </tr>)}
 
-                </tbody>
+                </tbody>)}
             </table>
+
+            {loading && <TableLoader/>}
 
             {itemsPerPage < filteredCustomers.length && (
                 <Pagination

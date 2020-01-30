@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e21cb7d7-698a-4dfd-8260-919d74b16af8" name="Default Changelist" comment="" />
+    <list default="true" id="e21cb7d7-698a-4dfd-8260-919d74b16af8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/js/components/loaders/FormContentLoader.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/js/components/loaders/TableLoader.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/components/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/pages/CustomerPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/pages/CustomerPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/pages/CustomersPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/pages/CustomersPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/pages/InvoicePage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/pages/InvoicePage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/pages/InvoicesPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/pages/InvoicesPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/pages/LoginPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/pages/LoginPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/pages/RegisterPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/pages/RegisterPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +71,9 @@
       </path>
     </expand>
     <select />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -170,6 +188,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1WleGlGumydkACwqZN9LmaqyUwq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -188,11 +207,30 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev-server" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev-server" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.dev-server" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -237,6 +275,26 @@
       <screen x="0" y="28" width="1600" height="872" />
     </state>
     <state x="486" y="195" width="628" height="529" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/1680.0.1440.900/0.28.1600.872@0.28.1600.872" timestamp="1579728557907" />
+    <state width="1394" height="231" key="GridCell.Tab.0.bottom" timestamp="1580375621375">
+      <screen x="1680" y="0" width="1440" height="900" />
+    </state>
+    <state width="1394" height="231" key="GridCell.Tab.0.bottom/1680.0.1440.900/0.28.1600.872@1680.0.1440.900" timestamp="1580375621375" />
+    <state width="1394" height="231" key="GridCell.Tab.0.center" timestamp="1580375621373">
+      <screen x="1680" y="0" width="1440" height="900" />
+    </state>
+    <state width="1394" height="231" key="GridCell.Tab.0.center/1680.0.1440.900/0.28.1600.872@1680.0.1440.900" timestamp="1580375621373" />
+    <state width="1394" height="231" key="GridCell.Tab.0.left" timestamp="1580375621370">
+      <screen x="1680" y="0" width="1440" height="900" />
+    </state>
+    <state width="1394" height="231" key="GridCell.Tab.0.left/1680.0.1440.900/0.28.1600.872@1680.0.1440.900" timestamp="1580375621370" />
+    <state width="1394" height="231" key="GridCell.Tab.0.right" timestamp="1580375621373">
+      <screen x="1680" y="0" width="1440" height="900" />
+    </state>
+    <state width="1394" height="231" key="GridCell.Tab.0.right/1680.0.1440.900/0.28.1600.872@1680.0.1440.900" timestamp="1580375621373" />
+    <state x="1899" y="97" key="SettingsEditor" timestamp="1580373416098">
+      <screen x="1680" y="0" width="1440" height="900" />
+    </state>
+    <state x="1899" y="97" key="SettingsEditor/1680.0.1440.900/0.28.1600.872@1680.0.1440.900" timestamp="1580373416098" />
     <state x="479" y="286" key="com.intellij.ide.util.TipDialog" timestamp="1579728769375">
       <screen x="0" y="28" width="1600" height="872" />
     </state>

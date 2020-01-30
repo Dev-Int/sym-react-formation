@@ -8,6 +8,9 @@
 import React, {useContext, useState} from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, withRouter, Redirect } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+
+// Les imports de nos components
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthContext from "./contexts/AuthContext";
@@ -23,6 +26,7 @@ import AuthAPI from "./services/authAPI";
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
@@ -57,6 +61,7 @@ const App = () => {
                     </Switch>
                 </main>
             </HashRouter>
+            <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
         </AuthContext.Provider>
     );
 };
