@@ -24,10 +24,10 @@ const CustomerPage = ({match, history}) => {
     const [loading, setLoading] = useState(false);
 
     // Récupérer le customer en fonction de l'identifiant.
-    const fetchCustomer = async id => {
+    const fetchCustomer = async (id) => {
         try {
-            const {firstName, lastName, email, company} = await CustomersAPI.find(id);
-            setCustomer({ firstName, lastName, email, company });
+            const {lastName, firstName, email, company} = await CustomersAPI.find(id);
+            setCustomer({ lastName, firstName, email, company });
             setLoading(false);
         } catch (error) {
             toast.error("Impossible de charger le client !");

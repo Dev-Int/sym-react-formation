@@ -27,7 +27,7 @@ const InvoicePage = ({match, history}) => {
     // Récupérer la facture en fonction de l'identifiant.
     const fetchInvoice = async id => {
         try {
-            const {amount, customer, status} = await InvoicesAPI.find(id);
+            const {amount, status, customer} = await InvoicesAPI.find(id);
             setInvoice({ amount, status, customer: customer.id });
             setLoading(false);
         } catch (error) {
@@ -74,11 +74,11 @@ const InvoicePage = ({match, history}) => {
             if (editing) {
                 await InvoicesAPI.update(id, invoice);
                 setErrors({});
-                toast.success(`La facture n°${invoice.id} est bien mise à jour`);
+                toast.success(`La facture est bien mise à jour`);
             } else {
                 await InvoicesAPI.create(invoice);
                 setErrors({});
-                toast.success(`la facture n°${invoice.id} est bien créée`);
+                toast.success(`la facture est bien créée`);
                 history.replace("/invoices");
             }
         } catch({response}) {
@@ -102,7 +102,7 @@ const InvoicePage = ({match, history}) => {
             {!loading && (<form onSubmit={handleSubmit}>
                 <Field
                     name="amount"
-                    // type="number"
+                    type="number"
                     placeholder="Montant de la facture"
                     label="Montant"
                     onChange={handleChange}
@@ -113,7 +113,7 @@ const InvoicePage = ({match, history}) => {
                 <Select
                     name="customer"
                     label="Client"
-                    value={invoice.customer.id}
+                    value={invoice.customer}
                     error={errors.customer}
                     onChange={handleChange}
                 >

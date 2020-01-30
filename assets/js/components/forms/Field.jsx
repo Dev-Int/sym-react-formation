@@ -14,7 +14,7 @@ const Field = ({
             <input
                 value={value}
                 onChange={onChange}
-                type={type}
+                type={"number" && "number step=0.05 min=0" || type}
                 placeholder={placeholder || label}
                 name={name}
                 id={name}

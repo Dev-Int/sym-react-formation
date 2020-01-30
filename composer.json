@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "dev-int/sym-react-formation",
+    "description": "Développement issu d'une formation Symfony4 / React",
     "license": "proprietary",
     "require": {
         "php": "^7.1.3",

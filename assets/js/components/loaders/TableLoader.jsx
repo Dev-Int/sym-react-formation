@@ -1,3 +1,6 @@
+/**
+ * @see Library from https://danilowoz.com/create-content-loader/
+ */
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 
