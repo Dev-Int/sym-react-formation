@@ -26,7 +26,7 @@ const LoginPage = ({ history }) => {
             await AuthApi.authenticate(credentials);
             setError("");
             setIsAuthenticated(true);
-            toast.success("Vous êtes désormais connecté !")
+            toast.success("Vous êtes désormais connecté !");
             history.replace("/customers");
         } catch (error) {
             setError("Aucun compte ne possède cette adresse ou, les informations ne correspondent pas.");
