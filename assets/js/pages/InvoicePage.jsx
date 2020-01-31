@@ -11,11 +11,13 @@ const InvoicePage = ({match, history}) => {
     const { id = "new" } = match.params;
 
     const [invoice, setInvoice] = useState({
+        chrono: "",
         amount: "",
         customer: "",
         status: "SENT"
     });
     const [errors, setErrors] = useState({
+        chrono: "",
         amount: "",
         customer: "",
         status: ""
@@ -27,8 +29,8 @@ const InvoicePage = ({match, history}) => {
     // Récupérer la facture en fonction de l'identifiant.
     const fetchInvoice = async id => {
         try {
-            const {amount, status, customer} = await InvoicesAPI.find(id);
-            setInvoice({ amount, status, customer: customer.id });
+            const {chrono, amount, status, customer} = await InvoicesAPI.find(id);
+            setInvoice({ chrono, amount, status, customer: customer.id });
             setLoading(false);
         } catch (error) {
             toast.error("Impossible de charger les factures !");
@@ -74,7 +76,7 @@ const InvoicePage = ({match, history}) => {
             if (editing) {
                 await InvoicesAPI.update(id, invoice);
                 setErrors({});
-                toast.success(`La facture ${id} est bien mise à jour`);
+                toast.success(`La facture ${invoice.chrono} est bien mise à jour`);
             } else {
                 await InvoicesAPI.create(invoice);
                 setErrors({});
@@ -97,7 +99,7 @@ const InvoicePage = ({match, history}) => {
 
     return (
         <>
-            <h1>{!editing && ("Création") || ("Modification")} d'une facture</h1>
+            <h1>{!editing && ("Création d'une") || ("Modification de la")} facture {editing && (" n°" + invoice.chrono)}</h1>
             {loading && <FormContentLoader />}
             {!loading && (<form onSubmit={handleSubmit}>
                 <NumberField

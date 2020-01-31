@@ -98,7 +98,7 @@ const InvoicesPage = (props) => {
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th>Numéro</th>
+                        <th>Id.</th>
                         <th>Client</th>
                         <th className={"text-center"}>Date</th>
                         <th className={"text-center"}>Statut</th>
@@ -119,7 +119,7 @@ const InvoicesPage = (props) => {
                         <span className={"badge badge-" + STATUS_CLASSES[invoice.status]}>{STATUS_LABELS[invoice.status]}</span>
                     </td>
                     <td className={"text-right"}>{invoice.amount.toLocaleString()} €</td>
-                    <td>
+                    <td className={"text-center"}>
                         <Link
                             className="btn btn-sm btn-primary mr-1"
                             to={"/invoices/" + invoice.id}
