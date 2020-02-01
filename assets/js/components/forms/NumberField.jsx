@@ -15,13 +15,14 @@ const NumberField = ({
                 value={value}
                 onChange={onChange}
                 type={type}
-                step="any"
+                step="0.01"
                 min="0"
                 placeholder={placeholder || label}
                 name={name}
                 id={name}
                 className={"form-control" + (error && " is-invalid")}
             />
+            <small id={name + "Help"} className="form-text text-muted">Vous devez mettre une virgule en cas de décimales.</small>
             {error && <p className="invalid-feedback">{error}</p>}
         </div>
     );
