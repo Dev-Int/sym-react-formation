@@ -73,7 +73,7 @@ async function remove(id) {
     return axios
         .delete(CUSTOMERS_API + "/" + id)
         .then(async response => {
-            const cachedCustomers = await  Cache.get("customers");
+            const cachedCustomers = await Cache.get("customers");
 
             if (cachedCustomers) {
                 Cache.set("customers", cachedCustomers.filter(c => c.id !== id));

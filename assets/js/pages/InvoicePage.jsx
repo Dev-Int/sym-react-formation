@@ -32,7 +32,7 @@ const InvoicePage = ({match, history}) => {
             setChrono(chrono);
             setLoading(false);
         } catch (error) {
-            toast.error("Impossible de charger les factures !");
+            toast.error("Impossible de charger la facture !");
             history.replace("/invoices");
         }
     };
@@ -77,7 +77,6 @@ const InvoicePage = ({match, history}) => {
                 setErrors({});
                 toast.success(`La facture ${chrono} est bien mise à jour`);
             } else {
-                console.log(invoice);
                 await InvoicesAPI.create(invoice);
                 setErrors({});
                 toast.success(`la facture est bien créée`);

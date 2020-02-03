@@ -70,9 +70,29 @@ function isAuthenticated() {
     return false;
 }
 
+/**
+ * Savoir si l'on est admin.
+ * @return {boolean}
+ */
+function isAdmin() {
+    // 1. Existe-t-il un jeton ?
+    const token = window.localStorage.getItem("authToken");
+
+    // 2. Est-on authentifié ?
+    if (isAuthenticated()) {
+        // 3. Le rôle est-il celui attendu ?
+        const { roles } = jwtDecode(token);
+
+        return roles === "ROLE_ADMIN";
+    }
+
+    return false;
+}
+
 export default {
     authenticate,
     logout,
     setUp,
-    isAuthenticated
+    isAuthenticated,
+    isAdmin
 }
