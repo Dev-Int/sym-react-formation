@@ -23,7 +23,6 @@ import CustomerPage from "./pages/CustomerPage";
 import InvoicesPage from "./pages/InvoicesPage";
 import InvoicePage from "./pages/InvoicePage";
 import UsersPage from "./pages/UsersPage";
-import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthAPI from "./services/authAPI";
@@ -65,7 +64,6 @@ const App = () => {
                             <PrivateRoute path={"/invoices"} component={InvoicesPage} />
                             <PrivateRoute path={"/customers/:id"} component={CustomerPage} />
                             <PrivateRoute path={"/customers"} component={CustomersPage} />
-                            <AdminRoute path={"/users/:id"} component={UserPage} />
                             <AdminRoute path={"/users"} component={UsersPage} />
                             <Route path={"/"} component={HomePage} />
                         </Switch>
