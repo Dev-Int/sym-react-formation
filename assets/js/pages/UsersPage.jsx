@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
 import UsersAPI from "../services/UsersAPI";
-import {Link} from "react-router-dom";
 import TableLoader from "../components/loaders/TableLoader";
 
 const UsersPage = (props) => {
@@ -27,6 +27,7 @@ const UsersPage = (props) => {
 
     // Gestion de la suppression d'un utilisateur.
     const handelDelete = async id => {
+        // TODO : Ajouter une confirmation de suppression.
         const originalUsers = [...users];
         setUsers(users.filter(user => user.id !== id));
 
@@ -35,7 +36,7 @@ const UsersPage = (props) => {
             toast.success("L'utilisateur est bien supprimé");
         } catch (error) {
             setUsers(originalUsers);
-            toast.error("La suppression a échouée !");
+            toast.error("La suppression a échoué !");
         }
     };
 

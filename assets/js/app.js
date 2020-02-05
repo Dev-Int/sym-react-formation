@@ -23,6 +23,7 @@ import CustomerPage from "./pages/CustomerPage";
 import InvoicesPage from "./pages/InvoicesPage";
 import InvoicePage from "./pages/InvoicePage";
 import UsersPage from "./pages/UsersPage";
+import UserPage from "./pages/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AuthAPI from "./services/authAPI";
@@ -31,7 +32,6 @@ import AuthAPI from "./services/authAPI";
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.css';
 import 'react-toastify/dist/ReactToastify.css';
-import UserPage from "./pages/UserPage";
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';

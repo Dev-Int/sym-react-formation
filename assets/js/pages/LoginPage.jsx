@@ -36,7 +36,6 @@ const LoginPage = ({ history }) => {
             }
             history.replace("/customers");
         } catch (error) {
-            console.log(error);
             setError("Aucun compte ne possède cette adresse ou, les informations ne correspondent pas.");
             toast.error("Une erreur est survenue !");
         }

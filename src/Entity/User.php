@@ -216,7 +216,10 @@ class User implements UserInterface
         return $this;
     }
 
-    final public function promoteUser(UserInterface $user): void
+    /**
+     * @todo Étudier la possibilité de promouvoir ou rétrograder un user plutôt que de le modifier.
+     */
+    final public function promoteUser(): void
     {
         $this->roles = ['ROLE_ADMIN'];
     }
