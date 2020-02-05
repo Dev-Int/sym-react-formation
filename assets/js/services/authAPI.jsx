@@ -83,7 +83,7 @@ function isAdmin() {
         // 3. Le rôle est-il celui attendu ?
         const { roles } = jwtDecode(token);
 
-        return roles === "ROLE_ADMIN";
+        return roles.indexOf("ROLE_ADMIN") !== -1;
     }
 
     return false;

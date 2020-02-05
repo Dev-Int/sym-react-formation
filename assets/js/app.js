@@ -13,7 +13,9 @@ import {css} from "glamor";
 
 // Les imports de nos components
 import Navbar from "./components/Navbar";
+import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminContext from "./contexts/AdminContext";
 import AuthContext from "./contexts/AuthContext";
 import HomePage from "./pages/HomePage";
 import CustomersPage from "./pages/CustomersPage";
@@ -29,8 +31,7 @@ import AuthAPI from "./services/authAPI";
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.css';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminContext from "./contexts/AdminContext";
-import AdminRoute from "./components/AdminRoute";
+import UserPage from "./pages/UserPage";
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
@@ -49,12 +50,10 @@ const App = () => {
     const NavbarWithRouter = withRouter(Navbar);
 
     return (
+        <AdminContext.Provider value={ {isAdmin, setIsAdmin} }>
             <AuthContext.Provider value={
                 {isAuthenticated, setIsAuthenticated}
             }>
-                <AuthContext.Provider value={
-                    {isAdmin, setIsAdmin}
-                }>
                 <HashRouter>
                     <NavbarWithRouter />
 
@@ -66,6 +65,7 @@ const App = () => {
                             <PrivateRoute path={"/invoices"} component={InvoicesPage} />
                             <PrivateRoute path={"/customers/:id"} component={CustomerPage} />
                             <PrivateRoute path={"/customers"} component={CustomersPage} />
+                            <AdminRoute path={"/users/:id"} component={UserPage} />
                             <AdminRoute path={"/users"} component={UsersPage} />
                             <Route path={"/"} component={HomePage} />
                         </Switch>
@@ -80,7 +80,7 @@ const App = () => {
 
                 />
             </AuthContext.Provider>
-        </AuthContext.Provider>
+        </AdminContext.Provider>
     );
 };
 

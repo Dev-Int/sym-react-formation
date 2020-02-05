@@ -43,7 +43,6 @@ const UsersPage = (props) => {
         <>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h1>Liste des Utilisateurs</h1>
-                <Link to="/register" className="btn btn-primary">Inscription</Link>
             </div>
 
             <table className="table table-hover">
@@ -63,6 +62,12 @@ const UsersPage = (props) => {
                         <td>{user.lastName}</td>
                         <td>{user.email}</td>
                         <td className={"text-center"}>
+                            <Link
+                                to={"/users/" + user.id}
+                                className="btn btn-sm btn-primary mr-1"
+                            >
+                                Modifier
+                            </Link>
                             <button
                                 onClick={() => handelDelete(user.id)}
                                 className="btn btn-sm btn-danger"

@@ -16,8 +16,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInterface, CacheableSupportsMethodInterface
 {
-    const FORMAT_KEY = 'datetime_format';
-    const TIMEZONE_KEY = 'datetime_timezone';
+    public const FORMAT_KEY = 'datetime_format';
+    public const TIMEZONE_KEY = 'datetime_timezone';
 
     private $defaultContext;
 
@@ -30,7 +30,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
     /**
      * @param array $defaultContext
      */
-    public function __construct($defaultContext = [], \DateTimeZone $timezone = null)
+    public function __construct(array $defaultContext = [], \DateTimeZone $timezone = null)
     {
         $this->defaultContext = [
             self::FORMAT_KEY => \DateTime::RFC3339,
@@ -52,7 +52,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
      *
      * @throws InvalidArgumentException
      */
-    public function normalize($object, $format = null, array $context = [])
+    final public function normalize($object, $format = null, array $context = []): string
     {
         if (!$object instanceof \DateTimeInterface) {
             throw new InvalidArgumentException('The object must implement the "\DateTimeInterface".');
@@ -70,9 +70,14 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
     }
 
     /**
-     * {@inheritdoc}
+     * Checks whether the given class is supported for normalization by this normalizer.
+     *
+     * @param mixed  $data   Data to normalize
+     * @param string|null $format The format being (de-)serialized from or into
+     *
+     * @return bool
      */
-    public function supportsNormalization($data, $format = null)
+    final public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof \DateTimeInterface;
     }
@@ -82,7 +87,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
      *
      * @throws NotNormalizableValueException
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    final public function denormalize($data, $type, $format = null, array $context = [])
     {
         $dateTimeFormat = $context[self::FORMAT_KEY] ?? null;
         $timezone = $this->getTimezone($context);
@@ -116,7 +121,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
     /**
      * {@inheritdoc}
      */
-    public function supportsDenormalization($data, $type, $format = null)
+    final public function supportsDenormalization($data, $type, $format = null): bool
     {
         return isset(self::$supportedTypes[$type]);
     }
@@ -124,7 +129,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
     /**
      * {@inheritdoc}
      */
-    public function hasCacheableSupportsMethod(): bool
+    final public function hasCacheableSupportsMethod(): bool
     {
         return __CLASS__ === \get_class($this);
     }

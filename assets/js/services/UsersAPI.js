@@ -22,6 +22,45 @@ async function findAll() {
     ;
 }
 
+async function find(id) {
+    const cachedUser = await Cache.get("users." + id);
+
+    if (cachedUser) return cachedUser;
+
+    return axios
+        .get(USERS_API + "/" + id)
+        .then(response => {
+            Cache.set("users." + id, response.data);
+
+            return response.data;
+        })
+    ;
+}
+
+function update(id, user) {
+    return axios
+        .put(USERS_API + "/" + id, {
+            ...user,
+            roles: [user.roles]
+        })
+        .then(async response => {
+            const cachedUsers = await Cache.get("users");
+            const cachedUser = await Cache.get("users." + id);
+
+            if (cachedUser) {
+                Cache.set("users." + id, response.data);
+            }
+
+            if (cachedUsers) {
+                const index = cachedUsers.findIndex(u => u.id === +id);
+                cachedUsers[index] = response.data;
+            }
+
+            return response.data;
+        })
+    ;
+}
+
 async function remove(id) {
     return axios
         .delete(USERS_API + "/" + id)
@@ -40,5 +79,7 @@ async function remove(id) {
 export default {
     register,
     findAll,
+    find,
+    update,
     remove
 }

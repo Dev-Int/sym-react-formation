@@ -1,13 +1,16 @@
 import React, { useContext } from 'react';
-import AuthAPI from "../services/authAPI";
 import { NavLink } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
 import { toast } from "react-toastify";
+import AuthAPI from "../services/authAPI";
+import AdminContext from "../contexts/AdminContext";
+import AuthContext from "../contexts/AuthContext";
 
 const Navbar = ({ history }) => {
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+    const { isAdmin, setIsAdmin } = useContext(AdminContext);
     const handleLogout =() => {
         AuthAPI.logout();
+        setIsAdmin(false);
         setIsAuthenticated(false);
         toast.info("Vous êtes désormais déconnecté ");
         history.push("/login");
@@ -42,6 +45,11 @@ const Navbar = ({ history }) => {
                             Factures
                         </NavLink>
                     </li>
+                    {isAdmin && (<li className="nav-item">
+                        <NavLink className="nav-link" to="/users">
+                            Utilisateurs
+                        </NavLink>
+                    </li>)}
                 </ul>
                 <ul className="navbar-nav ml-auto">
                     {!isAuthenticated && (
