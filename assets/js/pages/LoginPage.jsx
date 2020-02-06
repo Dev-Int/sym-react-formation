@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import AuthApi from "../services/authAPI";
 import AuthContext from "../contexts/AuthContext";
+import AdminContext from "../contexts/AdminContext";
 import Field from "../components/forms/Field";
 import { toast } from "react-toastify";
 
 const LoginPage = ({ history }) => {
     const { setIsAuthenticated } = useContext(AuthContext);
+    const { setIsAdmin } = useContext(AdminContext);
     const [credentials, setCredentials] = useState({
         username: "",
         password: ""
@@ -26,7 +28,12 @@ const LoginPage = ({ history }) => {
             await AuthApi.authenticate(credentials);
             setError("");
             setIsAuthenticated(true);
-            toast.success("Vous êtes désormais connecté !");
+            if (AuthApi.isAdmin()) {
+                setIsAdmin(true);
+                toast.success("Vous êtes connecté en tant qu'Administrateur");
+            } else {
+                toast.success("Vous êtes désormais connecté !");
+            }
             history.replace("/customers");
         } catch (error) {
             setError("Aucun compte ne possède cette adresse ou, les informations ne correspondent pas.");

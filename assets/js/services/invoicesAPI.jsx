@@ -14,7 +14,8 @@ async function findAll() {
             Cache.set("invoices", invoices);
 
             return invoices;
-        });
+        })
+    ;
 }
 
 async function find(id) {

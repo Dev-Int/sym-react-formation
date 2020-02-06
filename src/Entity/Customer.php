@@ -10,6 +10,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -177,12 +178,12 @@ class Customer
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
 
@@ -196,7 +197,7 @@ class Customer
      */
     public function getTotalAmount(): float
     {
-        return array_reduce($this->invoices->toArray(), function ($total, $invoice) {
+        return array_reduce($this->invoices->toArray(), static function ($total, $invoice) {
             return $total + $invoice->getAmount();
         }, 0);
     }
@@ -207,8 +208,8 @@ class Customer
      */
     public function getUnpaidAmount(): float
     {
-        return array_reduce($this->invoices->toArray(), function ($total, $invoice) {
-            return $total + ($invoice->getStatus() === "PAID" || $invoice->getStatus() === "CANCELED" ? 0 : $invoice->getAmount());
+        return array_reduce($this->invoices->toArray(), static function ($total, $invoice) {
+            return $total + ($invoice->getStatus() === 'PAID' || $invoice->getStatus() === 'CANCELED' ? 0 : $invoice->getAmount());
         }, 0);
     }
 }

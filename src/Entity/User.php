@@ -38,6 +38,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"users:read"})
      */
     private $roles = [];
 
@@ -72,6 +73,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Customer", mappedBy="user")
+     * @Groups("users:read")
      */
     private $customers;
 
@@ -114,7 +116,9 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
