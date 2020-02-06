@@ -48,13 +48,13 @@ class CustomerUserSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function setUserForCustomer(ViewEvent $event): void
+    final public function setUserForCustomer(ViewEvent $event): void
     {
         $customer = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if ($customer instanceof Customer && $method === "POST") {
-            // Récupérer le User connecté
+        if ($customer instanceof Customer && $method === 'POST') {
+            // Récupérer l'utilisateur connecté
             $user = $this->security->getUser();
 
             // Assigner l'utilisateur au Customer qui est en train d'etre créé
