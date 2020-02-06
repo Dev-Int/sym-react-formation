@@ -9,10 +9,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Customer;
 use App\Entity\Invoice;
-use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
@@ -61,19 +61,19 @@ class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryIt
         if (
             ($resourceClass === Invoice::class || $resourceClass === Customer::class)
             &&
-            !$this->auth->isGranted('ROLE_ADMIN')
+            $user instanceof UserInterface
             &&
-            $user instanceof User
+            !$this->auth->isGranted('ROLE_ADMIN')
         ) {
             $rootAlias = $queryBuilder->getRootAliases()[0];
 
             if ($resourceClass === Customer::class) {
                 $queryBuilder->andWhere("$rootAlias.user = :user");
             } elseif ($resourceClass === Invoice::class) {
-                $queryBuilder->join("$rootAlias.customer", "c")->andWhere("c.user = :user");
+                $queryBuilder->join("$rootAlias.customer", 'c')->andWhere('c.user = :user');
             }
 
-            $queryBuilder->setParameter("user", $user);
+            $queryBuilder->setParameter('user', $user);
         }
     }
 }
