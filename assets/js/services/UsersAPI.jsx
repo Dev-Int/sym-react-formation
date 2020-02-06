@@ -3,7 +3,22 @@ import Cache from "./cache";
 import { USERS_API } from "./config";
 
 function register(user) {
-    return axios.post(USERS_API, user);
+    return axios
+        .post(USERS_API, {
+            ...user,
+            roles: ['ROLE_USER']
+        })
+        .then(async response => {
+            console.log(response);
+            const cachedUsers = await Cache.get("users");
+
+            if (cachedUsers) {
+                Cache.set("users", [...cachedUsers, response.data]);
+            }
+
+            return response;
+        })
+    ;
 }
 
 async function findAll() {

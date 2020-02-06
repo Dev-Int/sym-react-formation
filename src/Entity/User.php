@@ -73,6 +73,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Customer", mappedBy="user")
+     * @Groups("users:read")
      */
     private $customers;
 

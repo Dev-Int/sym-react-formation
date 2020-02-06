@@ -1,12 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import Modal from 'react-modal';
 import {toast} from "react-toastify";
+import jwtDecode from "jwt-decode";
 import UsersAPI from "../services/UsersAPI";
 import TableLoader from "../components/loaders/TableLoader";
-import AdminContext from "../contexts/AdminContext";
+
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)'
+    }
+};
 
 const UsersPage = (props) => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [currentUser] = useState(() =>{
+        const token = window.localStorage.getItem("authToken");
+        const  { username } = jwtDecode(token);
+        return username;
+    });
+
+    // Ouvrir une fenêtre modale.
+    const openModal = () => {
+        setIsOpen(true);
+    };
+
+    // Fermer une fenêtre modale.
+    const closeModal = () => {
+        setIsOpen(false);
+    };
 
     // Récupérer les utilisateurs.
     const fetchUsers = async () => {
@@ -26,7 +54,8 @@ const UsersPage = (props) => {
 
     // Gestion de la suppression d'un utilisateur.
     const handelDelete = async id => {
-        // TODO : Ajouter une confirmation de suppression.
+        closeModal();
+
         const originalUsers = [...users];
         setUsers(users.filter(user => user.id !== id));
 
@@ -82,7 +111,7 @@ const UsersPage = (props) => {
                     <th>Prénom</th>
                     <th>Nom</th>
                     <th>Email</th>
-                    <th className={"text-center"}>Acions</th>
+                    <th className={"text-center"}>Actions</th>
                 </tr>
                 </thead>
                 {!loading && (<tbody>
@@ -95,24 +124,56 @@ const UsersPage = (props) => {
                             {user.roles[0] === "ROLE_ADMIN" && (
                                 <button
                                     onClick={() => handelRevoke(user.id)}
-                                    className="btn btn-sm btn-warning mr-1"
+                                    className={"btn btn-sm mr-1" + (user.email === currentUser && (" btn-success") || (" btn-warning"))}
+                                    disabled={user.email === currentUser}
+                                    title="Cet utilisateur ne sera plus administrateur"
                                 >
-                                    Révoquer
+                                    {user.email === currentUser && ("C'est vous") || ("Révoquer")}
                                 </button>
                             ) || (
                                 <button
                                     onClick={() => handlePromote(user.id)}
                                     className="btn btn-sm btn-success mr-1"
+                                    title="Cet utilisateur sera administrateur"
                                 >
                                     Promouvoir
                                 </button>
                             )}
-                            <button
-                                onClick={() => handelDelete(user.id)}
-                                className="btn btn-sm btn-danger"
+                            {user.email !== currentUser && (
+                                <button
+                                    onClick={() => openModal()}
+                                    disabled={user.customers.length > 0}
+                                    className="btn btn-sm btn-danger"
+                                    title={user.customers.length > 0 && (
+                                        "Cet utilisateur possède des clients"
+                                    ) || (
+                                        "Supprimer l'utilisateur"
+                                    )}
+                                >
+                                    Supprimer
+                                </button>
+                            )}
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                                contentLabel="Attention !!"
                             >
-                                Supprimer
-                            </button>
+                                <h2>Attention !!</h2>
+                                <p>Vous êtes sur le point de supprimer l'utilisateur {user.firstName} {user.lastName}.</p>
+                                <button
+                                    className="btn btn-sm btn-danger"
+                                    onClick={() => handelDelete(user.id)}
+                                >
+                                    Supprimer
+                                </button>
+                                <button
+                                    className="btn btn-sm btn-primary"
+                                    onClick={() => closeModal()}
+                                >
+                                    Annuler
+                                </button>
+                            </Modal>
                         </td>
                     </tr>)}
                 </tbody>)}
