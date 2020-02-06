@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
         $this->encoder = $encoder;
     }
 
-    public function load(ObjectManager $manager)
+    final public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
 
@@ -33,15 +33,25 @@ class AppFixtures extends Fixture
 
             $hash = $this->encoder->encodePassword($user, 'password');
 
-            $user->setFirstName($faker->firstName)
-                ->setLastName($faker->lastName)
-                ->setEmail($faker->email)
-                ->setPassword($hash)
-            ;
+            if ($u === 0) {
+                $user->setFirstName($faker->firstName)
+                    ->setLastName($faker->lastName)
+                    ->setEmail('test@test.com')
+                    ->setRoles(['ROLE_ADMIN'])
+                    ->setPassword($hash)
+                ;
+            } else {
+                $user->setFirstName($faker->firstName)
+                    ->setLastName($faker->lastName)
+                    ->setEmail($faker->email)
+                    ->setRoles(['ROLE_USER'])
+                    ->setPassword($hash)
+                ;
+            }
 
             $manager->persist($user);
 
-            for ($c = 0; $c < mt_rand(5, 20); $c++) {
+            for ($c = 0, $cMax = mt_rand(5, 20); $c < $cMax; $c++) {
                 $customer = (new Customer())
                     ->setFirstName($faker->firstName())
                     ->setLastName($faker->lastName)
@@ -52,7 +62,7 @@ class AppFixtures extends Fixture
 
                 $manager->persist($customer);
 
-                for ($i = 0; $i < mt_rand(3, 10); $i++) {
+                for ($i = 0, $iMax = mt_rand(3, 10); $i < $iMax; $i++) {
                     $invoice = (new Invoice())
                         ->setAmount($faker->randomFloat(2, 250, 5000))
                         ->setSentAt($faker->dateTimeBetween('-6 months'))
