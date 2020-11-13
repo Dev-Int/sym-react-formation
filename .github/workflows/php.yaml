@@ -22,7 +22,7 @@ jobs:
         with:
           php_version: 7.1
           composer_version: 1
-        run: composer install --prefer-dist --no-progress --no-suggest
+#        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run Doctrine Migrations
         uses: everphone-gmbh/doctrine-migrations-action@v0.9
