@@ -15,7 +15,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "axios": "^0.18.1",
+        "axios": "^0.21.1",
         "dotenv": "^8.2.0",
         "glamor": "^2.20.40",
         "jwt-decode": "^2.2.0",
